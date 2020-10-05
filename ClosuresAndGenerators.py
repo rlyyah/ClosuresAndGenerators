@@ -138,3 +138,33 @@ def plural_gene(noun, rules_filename = 'plural4-rules.txt'):
             return apply_rule(noun)
     raise ValueError('no matching rule for {0}'.format(noun))
 
+
+'''
+ presence of the yield keyword in make_counter means 
+ that this is not a normal function. It is a special kind 
+ of function which generates values one at a time. 
+ You can think of it as a resumable function. 
+ Calling it will return a generator that can be used to 
+ generate successive values of x
+'''
+
+
+'''
+"yield" pauses a function
+"next()" resumes where it left off
+'''
+
+def fib(max):
+    a, b = 0, 1
+    while a < max:
+        yield a
+        a, b = b, a+b
+
+for n in fib(1000):
+    print(n, end = ' ')
+
+fib_list = list(fib(10000))
+print(fib_list)
+
+
+
