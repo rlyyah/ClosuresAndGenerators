@@ -65,3 +65,10 @@ def plural(noun):
             return apply_rule(noun)
 
 print(plural('fly'))
+
+def build_match_apply_functions(pattern, search, replace):
+    def matches_rule(word):
+        return re.search(pattern, word)
+    def apply_rule(word):
+        return re.sub(search, replace, word)
+    return (matches_rule, apply_rule)
