@@ -99,3 +99,26 @@ some_non_plural_words = ['fly', 'dog', 'cat', 'car', 'hero', 'sex']
 for word in some_non_plural_words:
     print(word, ' -> ', make_word_plural(word))
 
+def build_and_apply_functions(pattern, search, replace):
+    def matches_rule(word):
+        return re.search(pattern, word)
+    def apply_rule(word):
+        return re.sub(search, replace, word)
+    return (matches_rule, apply_rule)
+
+rules = []
+
+with open('plural4-rules.txt', encoding='utf-8') as pattern_file:
+    for line in pattern_file:
+        pattern, search, replace = line.split(None, 2)
+        rules.append(build_and_apply_functions(pattern, search, replace))
+
+def make_word_plural_2(word):
+    for matches_rule, apply_rule in rules:
+        if matches_rule(word):
+            return apply_rule(word)
+
+print('\nWITHA  FILE\n')
+
+for word in some_non_plural_words:
+    print(word, ' -> ', make_word_plural_2(word))
